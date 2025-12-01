@@ -3,27 +3,30 @@ import { LoginScreen } from './components/LoginScreen';
 import { RegisterScreen } from './components/RegisterScreen';
 import { Dashboard } from './components/Dashboard';
 import { ClientDashboard } from './components/ClientDashboard';
+import { StoreDashboard } from './components/StoreDashboard';
 import { ThemeProvider } from './contexts/ThemeContext';
+
+type UserType = 'admin' | 'store' | 'client';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [userType, setUserType] = useState<UserType>('client');
   const [showRegister, setShowRegister] = useState(false);
 
-  const handleLogin = (adminStatus: boolean) => {
-    setIsAdmin(adminStatus);
+  const handleLogin = (type: UserType) => {
+    setUserType(type);
     setIsAuthenticated(true);
   };
 
-  const handleRegister = (adminStatus: boolean) => {
-    setIsAdmin(adminStatus);
+  const handleRegister = (type: UserType) => {
+    setUserType(type);
     setShowRegister(false);
     setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setIsAdmin(false);
+    setUserType('client');
   };
 
   return (
@@ -41,8 +44,10 @@ export default function App() {
           />
         )
       ) : (
-        isAdmin ? (
+        userType === 'admin' ? (
           <Dashboard onLogout={handleLogout} />
+        ) : userType === 'store' ? (
+          <StoreDashboard onLogout={handleLogout} />
         ) : (
           <ClientDashboard onLogout={handleLogout} />
         )

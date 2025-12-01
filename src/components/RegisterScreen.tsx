@@ -6,7 +6,7 @@ import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 
 interface RegisterScreenProps {
-  onRegister: (isAdmin: boolean) => void;
+  onRegister: (userType: 'admin' | 'store' | 'client') => void;
   onBackToLogin: () => void;
 }
 
@@ -41,7 +41,7 @@ export function RegisterScreen({ onRegister, onBackToLogin }: RegisterScreenProp
     }
 
     // Simulación de registro - los nuevos usuarios son clientes por defecto
-    onRegister(false);
+    onRegister('client');
   };
 
   const handleChange = (field: string, value: string) => {

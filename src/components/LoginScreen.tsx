@@ -6,7 +6,7 @@ import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 
 interface LoginScreenProps {
-  onLogin: (isAdmin: boolean) => void;
+  onLogin: (userType: 'admin' | 'store' | 'client') => void;
   onGoToRegister: () => void;
 }
 
@@ -18,9 +18,14 @@ export function LoginScreen({ onLogin, onGoToRegister }: LoginScreenProps) {
     e.preventDefault();
     // Simulación de login
     if (username && password) {
-      // Verificar si es admin
-      const isAdmin = username === 'admin@email.com' && password === 'admin123';
-      onLogin(isAdmin);
+      // Verificar tipo de usuario
+      if (username === 'admin@email.com' && password === 'admin123') {
+        onLogin('admin');
+      } else if (username === 'store@email.com' && password === 'store123') {
+        onLogin('store');
+      } else {
+        onLogin('client');
+      }
     }
   };
 
@@ -40,8 +45,11 @@ export function LoginScreen({ onLogin, onGoToRegister }: LoginScreenProps) {
         </CardHeader>
         <CardContent>
           <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <p className="text-sm text-blue-800 dark:text-blue-300">
+            <p className="text-sm text-blue-800 dark:text-blue-300 mb-1">
               <strong>Acceso Admin:</strong> admin@email.com / admin123
+            </p>
+            <p className="text-sm text-purple-800 dark:text-purple-300">
+              <strong>Acceso Tienda:</strong> store@email.com / store123
             </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">

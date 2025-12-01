@@ -8,7 +8,8 @@ import {
   LogOut,
   Gem,
   Moon,
-  Sun
+  Sun,
+  AlertTriangle
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { AdminEcommerce } from './AdminEcommerce';
@@ -16,13 +17,14 @@ import { MediaEditor } from './MediaEditor';
 import { SocialMediaCreator } from './SocialMediaCreator';
 import { InventoryManager } from './InventoryManager';
 import { OrderRequest } from './OrderRequest';
+import { AdminIncidentManager } from './AdminIncidentManager';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
-type ActiveModule = 'ecommerce' | 'media-editor' | 'social-media' | 'inventory' | 'orders';
+type ActiveModule = 'ecommerce' | 'media-editor' | 'social-media' | 'inventory' | 'orders' | 'incidents';
 
 export function Dashboard({ onLogout }: DashboardProps) {
   const [activeModule, setActiveModule] = useState<ActiveModule>('ecommerce');
@@ -34,6 +36,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
     { id: 'social-media' as const, name: 'Redes Sociales', icon: Share2 },
     { id: 'inventory' as const, name: 'Inventario', icon: Package },
     { id: 'orders' as const, name: 'Pedidos', icon: ShoppingBag },
+    { id: 'incidents' as const, name: 'Incidencias', icon: AlertTriangle },
   ];
 
   return (
@@ -99,6 +102,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
           {activeModule === 'social-media' && <SocialMediaCreator />}
           {activeModule === 'inventory' && <InventoryManager />}
           {activeModule === 'orders' && <OrderRequest />}
+          {activeModule === 'incidents' && <AdminIncidentManager />}
         </main>
       </div>
     </div>
