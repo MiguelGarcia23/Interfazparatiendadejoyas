@@ -9,7 +9,8 @@ import {
   Gem,
   Moon,
   Sun,
-  AlertTriangle
+  AlertTriangle,
+  BarChart3
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { AdminEcommerce } from './AdminEcommerce';
@@ -18,19 +19,21 @@ import { SocialMediaCreator } from './SocialMediaCreator';
 import { InventoryManager } from './InventoryManager';
 import { OrderRequest } from './OrderRequest';
 import { AdminIncidentManager } from './AdminIncidentManager';
+import { AdminStatistics } from './AdminStatistics';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface DashboardProps {
   onLogout: () => void;
 }
 
-type ActiveModule = 'ecommerce' | 'media-editor' | 'social-media' | 'inventory' | 'orders' | 'incidents';
+type ActiveModule = 'statistics' | 'ecommerce' | 'media-editor' | 'social-media' | 'inventory' | 'orders' | 'incidents';
 
 export function Dashboard({ onLogout }: DashboardProps) {
-  const [activeModule, setActiveModule] = useState<ActiveModule>('ecommerce');
+  const [activeModule, setActiveModule] = useState<ActiveModule>('statistics');
   const { theme, toggleTheme } = useTheme();
 
   const modules = [
+    { id: 'statistics' as const, name: 'Estadísticas', icon: BarChart3 },
     { id: 'ecommerce' as const, name: 'E-Commerce', icon: ShoppingCart },
     { id: 'media-editor' as const, name: 'Editor Multimedia', icon: Image },
     { id: 'social-media' as const, name: 'Redes Sociales', icon: Share2 },
@@ -97,6 +100,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
 
         {/* Main Content */}
         <main className="flex-1 p-6">
+          {activeModule === 'statistics' && <AdminStatistics />}
           {activeModule === 'ecommerce' && <AdminEcommerce />}
           {activeModule === 'media-editor' && <MediaEditor />}
           {activeModule === 'social-media' && <SocialMediaCreator />}
